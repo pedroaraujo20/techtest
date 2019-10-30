@@ -9,15 +9,16 @@ class TrmController {
     return res.json(trm);
   }
 
-  async store() {
+  async store(req, res) {
     try {
       const response = await axios.get(
         `https://transferwise.com/gb/currency-converter/api/historic?source=USD&target=UYU&period=30`
       );
 
       await Trm.create(response.data[0]);
+      return res.send('Added');
     } catch (err) {
-      console.log(err);
+      return res.send(err);
     }
   }
 }
